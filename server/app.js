@@ -4,10 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
 
-// Pull in config
 var config = require('./config'); // ./config.js
+
+var db = require('./db')();
 
 // Define routes
 var angular = require('./routes/angular'); // ./routes/angular.js
@@ -16,14 +16,6 @@ var api_action = require('./routes/api/action'); // ./routes/api/action.js
 
 // Create app from express
 var app = express();
-
-// Connect to DB
-mongoose.connect(config.mongo.url, function(err) {
-  if (err) {
-    console.error('Could not connect to MongoDB.');
-  }
-  console.log('Connected to MongoDB.');
-});
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(config.server.distFolder, 'favicon.ico')));
