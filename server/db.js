@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var config = require('./config'); // ./config.js
 
 function connect() {
-	mongoose.connect(config.mongo.prod_url, function(err) {
+	mongoose.connect(config.db.prod_url, function(err) {
 	  if (err) {
 	    console.error('Could not connect to MongoDB.');
 	    return;
