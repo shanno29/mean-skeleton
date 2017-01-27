@@ -54,7 +54,7 @@ describe('Action Route', function(){
                 params: [{user: config.userThree, command: 'Hello World'}]
             })
             .expect(200)
-            .then(function(response){;
+            .then(function(response){
                 response.body.name.should.equal('actionThree');
                 response.body.params[0].user.should.equal(config.userThree);
                 response.body.params[0].command.should.equal('Hello World');
@@ -102,7 +102,7 @@ describe('Action Route', function(){
             //.set('Authorization', 'JWT ' + global.userThreeJwt)
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .expect(200)
-            .then(function(response){;
+            .then(function(response){
                 response.body.name.should.equal('actionThree');
                 response.body.params[0].user.should.equal(config.userThree);
                 response.body.params[0].command.should.equal('Hello World');
@@ -137,6 +137,8 @@ describe('Action Route', function(){
             .expect(200)
             .then(function(response){
                 response.body.name.should.equal('actionOne');
+                response.body.params[0].user.should.equal(config.userOne);
+                response.body.params[0].command.should.equal('Hello World');
                 response.body.params[1].user.should.equal(config.userOne);
                 response.body.params[1].command.should.equal('Goodbye World');
                 response.body.params.length.should.equal(2);
@@ -157,6 +159,8 @@ describe('Action Route', function(){
             .expect(200)
             .then(function(response){
                 response.body.name.should.equal('actionTwo');
+                response.body.params[0].user.should.equal(config.userTwo);
+                response.body.params[0].command.should.equal('Hello World');
                 response.body.params[1].user.should.equal(config.userTwo);
                 response.body.params[1].command.should.equal('Goodbye World');
                 response.body.params.length.should.equal(2);
@@ -175,8 +179,10 @@ describe('Action Route', function(){
                 params: [{user: config.userThree, command: 'Goodbye World'}]
             })
             .expect(200)
-            .then(function(response){;
+            .then(function(response){
                 response.body.name.should.equal('actionThree');
+                response.body.params[0].user.should.equal(config.userThree);
+                response.body.params[0].command.should.equal('Hello World');
                 response.body.params[1].user.should.equal(config.userThree);
                 response.body.params[1].command.should.equal('Goodbye World');
                 response.body.params.length.should.equal(2);

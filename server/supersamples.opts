@@ -1,0 +1,19 @@
+{
+
+  "baseUrl": "http://127.0.0.1",
+
+  "reporter": "spec",
+
+   "renderers": {
+
+      "html": {
+
+        "outputFolder": "documentation",
+
+        "title": "BadgerTek"
+
+      }
+
+    }
+
+}

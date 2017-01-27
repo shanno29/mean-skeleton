@@ -2,11 +2,9 @@
   "name": "angular_node_skeleton",
   "version": "0.0.0",
   "private": true,
-
   "scripts": {
     "start": "node ./bin/www",
-    "test": "istanbul cover node_modules/mocha/bin/_mocha test/index.js",
-    "documentation": "mocha --reporter supersamples test/integration/index.js",
+    "test": "istanbul cover node_modules/mocha/bin/_mocha test/index.js && mocha --reporter supersamples test/integration/index.js",
     "coveralls": "npm run test -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "dependencies": {
@@ -22,11 +20,10 @@
   "devDependencies": {
     "chai": "latest",
     "coveralls": "latest",
+    "gulp": "^3.9.1",
     "istanbul": "latest",
     "mocha": "latest",
     "supersamples": "^1.2.0",
-    "supertest": "latest",
-    "gulp": "^3.9.1"
+    "supertest": "latest"
   }
-
 }

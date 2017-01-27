@@ -56,6 +56,7 @@ describe('Action Controller', function () {
             })
             .then(function (response) {
                 response.name.should.equal('actionOne');
+                response.params[0].command.should.equal('Hello World');
                 response.params[1].command.should.equal('Goodbye World');
                 response.params.length.should.equal(2);
                 done();
@@ -77,6 +78,7 @@ describe('Action Controller', function () {
             .then(function(response) {
                 response.name.should.equal('actionOne');
                 response.params[0].command.should.equal('Hello World');
+                response.params[1].command.should.equal('Goodbye World');
                 done();
             });
     });
