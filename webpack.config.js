@@ -1,3 +1,5 @@
+const app = __dirname + '/app';
+
 module.exports = {
   entry: './app/app.jsx',
   output: {
@@ -5,7 +7,7 @@ module.exports = {
     filename: './public/bundle.js'
   },
   resolve: {
-    root: __dirname + '/app',
+    root: app,
     extensions: ['', '.js', '.jsx']
   },
   module: {
@@ -17,6 +19,10 @@ module.exports = {
         },
         test: /\.jsx?$/,
         exclude: /(node_modules)/
+      },
+      {
+        test: /\.scss$/,
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       }
     ]
   }
