@@ -1,5 +1,5 @@
 {
-  "name": "angular_node_skeleton",
+  "name": "mern-skeleton",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -12,9 +12,15 @@
     "express": "4.13.1",
     "mongoose": "4.5.8",
     "morgan": "1.6.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
     "serve-favicon": "2.3.0"
   },
   "devDependencies": {
-    "gulp": "^3.9.1"
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.22.0",
+    "webpack": "^1.14.0"
   }
 }
