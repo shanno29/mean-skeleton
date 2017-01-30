@@ -1,20 +1,22 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
-var config = require('./config'); // ./config.js
+require('dotenv').config();
 
-var db = require('./db')();
+const config = require('./config'); // ./config.js
+
+const db = require('./db')();
 
 // Define routes
-var api = require('./routes/api/index');
-var react = require('./routes/react');
+const api = require('./routes/api/index');
+const react = require('./routes/react');
 
 // Create app from express
-var app = express();
+const app = express();
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(config.server.distFolder, 'favicon.ico')));
@@ -29,7 +31,7 @@ app.use('/', react);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
