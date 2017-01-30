@@ -1,5 +1,5 @@
 # mern-spa-skeleton
-A skeleton used for most projects using the Node, Express, React, and MongoDB.
+A skeleton useful for SPAs running Node, Express, React, and MongoDB.
 
 ## Prereqs
 * Node.js
