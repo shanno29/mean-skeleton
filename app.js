@@ -10,9 +10,8 @@ var config = require('./config'); // ./config.js
 var db = require('./db')();
 
 // Define routes
-var angular = require('./routes/angular'); // ./routes/angular.js
-var api_index = require('./routes/api/index'); // ./routes/api/index.js
-var api_action = require('./routes/api/action'); // ./routes/api/action.js
+var api = require('./routes/api/index');
+var react = require('./routes/react');
 
 // Create app from express
 var app = express();
@@ -25,9 +24,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(config.server.distFolder));
 
-app.use('/api', api_index) // Serve 'api_index' from /api
-app.use('/api/action', api_action); // Server 'api_action' from /api
-app.use('/', angular); // Serve 'angular' from /
+app.use('/api', api);
+app.use('/', react);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
