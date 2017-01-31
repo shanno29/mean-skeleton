@@ -1,3 +1,5 @@
+const webpack = require('webpack');
+
 const app = __dirname + '/app';
 
 module.exports = {
@@ -25,5 +27,12 @@ module.exports = {
         loaders: ['style-loader', 'css-loader', 'sass-loader']
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
+  ]
 };

@@ -1,6 +1,20 @@
-**/node_modules
-**/npm-debug.log
-**/.idea
+*
 
-.env
+!app/*
+!bin/*
+!config/*
+!routes/*
+!test/*
+!public/*
 public/bundle.js
+!.env.dev
+!.env.prod
+!.gitignore
+!.travis.yml
+!app.js
+!config.js
+!LICENSE
+!package.json
+!README.md
+!supersamples.opts
+!webpack.config.js
