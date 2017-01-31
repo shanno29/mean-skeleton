@@ -11,6 +11,7 @@
 public/bundle.js
 !.env.dev
 !.env.prod
+!.eslintrc.js
 !.gitignore
 !.travis.yml
 !app.js
