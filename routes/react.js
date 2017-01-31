@@ -1,9 +1,10 @@
-var express = require('express');
-var router = express.Router();
+const config = require('config');
+const express = require('express');
+const router = express.Router();
 
 // GET /api
 router.all('/*', function(req, res) {
-	res.sendFile('index.html', { root: config.server.distFolder });
+	res.sendFile('index.html', { root: config.get('server.distFolder') });
 });
 
 module.exports = router;
