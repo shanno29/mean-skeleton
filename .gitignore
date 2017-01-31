@@ -1,6 +1,7 @@
 # Ignore everything
 /*
 
+!.github
 !app
 !bin
 !config
