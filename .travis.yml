@@ -12,10 +12,12 @@ addons:
     packages:
       - g++-4.8
 before_script:
+  - npm install -g gulp
   - npm install
 services:
   - mongodb
 script:
   - npm test
+  - gulp travis
 after_success:
   - npm run coveralls
