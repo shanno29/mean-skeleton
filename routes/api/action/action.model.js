@@ -20,7 +20,7 @@ actionSchema.pre('save', function(next) {
     if (this._id == null) this._id = mongoose.Types.ObjectId();
     // timestamp stuff
     this.updated = Date.now();
-    for(const i = this.params.length; i--;) this.params[i].updated = Date.now();
+    for(let i = this.params.length; i--;) this.params[i].updated = Date.now();
     next();
 });
 // exports.Action used fix webstorm mongoose linting issue
