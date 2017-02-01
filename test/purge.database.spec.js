@@ -1,6 +1,5 @@
 const config = require('config');
 const request = require('supertest');
-const app = require('../../app');
 
 describe('Purge Database Util', function() {
     it('Delete Action One', function(done) {

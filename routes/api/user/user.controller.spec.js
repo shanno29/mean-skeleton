@@ -1,6 +1,5 @@
-const controller = require('../../routes/api/user/user.controller.js');
+const controller = require('./user.controller.js');
 const config = require('config');
-require('chai').should();
 
 // const mongoose = require('mongoose');
 // mongoose.Promise = global.Promise;

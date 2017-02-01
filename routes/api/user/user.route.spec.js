@@ -1,7 +1,5 @@
 const config = require('config');
 const request = require('supertest');
-const app = require('../../app');
-require('chai').should();
 
 describe('User Route', function() {
     it('Create User One', function(done) {

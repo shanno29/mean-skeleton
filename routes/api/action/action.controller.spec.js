@@ -1,6 +1,5 @@
-const controller = require('../../routes/api/action/action.controller.js');
+const controller = require('./action.controller');
 const config = require('config');
-require('chai').should();
 
 describe('Action Controller', function() {
     it('Create Action No ID', function(done) {

@@ -5,15 +5,21 @@ const webpackStream = require('webpack-stream');
 const webpack_config = require('./webpack.config');
 const eslint = require('gulp-eslint');
 const sasslint = require('gulp-sass-lint');
-
+const mocha = require('gulp-mocha');
+const connect = require('gulp-connect');
+require('dotenv').config();
 
 /* Utils */
 gulp.task('clean', () => {
   return del(['public/**/*', '!public/index.html']);
 });
 
+gulp.task('webserver', () => {
+  connect.server({port: process.env.PORT});
+});
+
 /* Webpack */
-gulp.task('webpack:prod', ['clean', 'lint:client', 'sasslint'], (callback) => {
+gulp.task('webpack:prod', ['clean', 'lint:client', 'sasslint'], () => {
   webpack_config.devtool = 'cheap-module-source-map';
   webpack_config.plugins.push(
     new webpack.optimize.DedupePlugin(),
@@ -28,7 +34,7 @@ gulp.task('webpack:prod', ['clean', 'lint:client', 'sasslint'], (callback) => {
     .pipe(webpackStream(webpack_config))
     .pipe(gulp.dest('./'));
 });
-gulp.task('webpack:dev', ['clean', 'lint:client', 'sasslint'], (callback) => {
+gulp.task('webpack:dev', ['clean', 'lint:client', 'sasslint'], () => {
   webpack_config.devtool = 'cheap-module-eval-source-map';
   return gulp.src('app/app.jsx')
     .pipe(webpackStream(webpack_config))
@@ -37,6 +43,26 @@ gulp.task('webpack:dev', ['clean', 'lint:client', 'sasslint'], (callback) => {
 gulp.task('webpack:watch', ['webpack:dev'], () => {
   gulp.watch(['app/**/*.jsx', 'app/**/*.js', 'app/sass/**/*.scss'], ['webpack:dev']);
 });
+
+/* Karma/Testing */
+gulp.task('test:client', () => {
+
+});
+gulp.task('test:server', ['webserver'], () => {
+  //var server = gulp.src('public').pipe(webserver({port: process.env.PORT}));
+
+  gulp.src('**/*.spec.js', {read: false})
+    .pipe(mocha({
+      reporter: 'supersamples',
+      globals: {
+        app: require('./app'),
+        should: require('should')
+      }
+    })).once('end', () => {
+      connect.serverClose();
+    });
+});
+gulp.task('test', ['test:client', 'test:server']);
 
 /* Linting */
 gulp.task('eslint:client', () => {
