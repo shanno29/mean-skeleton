@@ -4,14 +4,13 @@ const model = require('./action.model').Action;
 module.exports = {
 
     // make a new action
-    make: function (data) {
+    make: function(data) {
         return model
             .create(data);
-
     },
 
     // edit an action
-    edit: function (id, data) {
+    edit: function(id, data) {
         return model
             .findById(id)
             .then(function(action) {
@@ -21,7 +20,7 @@ module.exports = {
     },
 
     // lookup single action
-    lookup: function (id) {
+    lookup: function(id) {
         return model
             .findById(id);
     },
@@ -33,9 +32,9 @@ module.exports = {
     },
 
     // remove action
-    remove: function (id) {
+    remove: function(id) {
         return model
             .findByIdAndRemove(id);
-    }
+    },
 
 };

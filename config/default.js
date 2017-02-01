@@ -4,11 +4,11 @@ module.exports = {
     server: {
         distFolder: path.resolve(__dirname, '../public'),
     },
-    actionOne:'58797cdd4d1e021ce8648462',
+    actionOne: '58797cdd4d1e021ce8648462',
     actionTwo: '58797cdd4d1e021ce8648463',
     actionThree: '58797cdd4d1e021ce8648464',
     userOne: '58797cdd4d1e021ce864845f',
-    userTwo:'58797cdd4d1e021ce8648460',
+    userTwo: '58797cdd4d1e021ce8648460',
     userThree: '58797cdd4d1e021ce8648461',
 
     coverage: '/coverage/lcov-report',
@@ -17,5 +17,5 @@ module.exports = {
 
     jwtSecret: 'secret',
 
-    version: '1.0.1'
+    version: '1.0.1',
 };
