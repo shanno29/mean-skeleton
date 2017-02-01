@@ -7,11 +7,9 @@
 !config
 !routes
 !test
-!public
-public/bundle.js
-!.env.dev
-!.env.prod
-!.eslintrc.js
+!public/index.html
+!.env.*
+!.eslintrc.*.js
 !.gitignore
 !.travis.yml
 !app.js
