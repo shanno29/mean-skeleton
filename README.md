@@ -1,5 +1,6 @@
 # mern-spa-skeleton
 [![Build Status](https://travis-ci.org/BadgerTek/mern-skeleton.svg?branch=master)](https://travis-ci.org/BadgerTek/mern-skeleton)
+
 A skeleton useful for SPAs running Node, Express, React, and MongoDB.
 
 ## Prereqs
@@ -7,7 +8,7 @@ A skeleton useful for SPAs running Node, Express, React, and MongoDB.
   - Node.js
   - MongoDB, running locally
 - Recommended
-  - gulp, installed globally (`npm install -g gulp`)
+  - Gulp, installed globally (`npm install -g gulp`)
 
 ## Setup
 1. `npm install`
