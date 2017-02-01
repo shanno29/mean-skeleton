@@ -7,7 +7,7 @@ const model = require('./user.model').User;
 module.exports = {
 
     // make a user
-    make: function (data) {
+    make: function(data) {
         return model
             .find({email: data.email})
             .then(function(users) {
@@ -18,11 +18,10 @@ module.exports = {
     },
 
     // login a user
-    login: function (id, data) {
+    login: function(id, data) {
         return model
             .findById(id)
             .then(function(user) {
-
                 // checks user password combination against password hash in database
                 if (!model.validPassword(data.password, user.password))throw new Error('Incorrect Password');
 
@@ -38,7 +37,7 @@ module.exports = {
     },
 
     // edit a user
-    edit: function (id, data) {
+    edit: function(id, data) {
         return model
             .findById(id)
             .then(function(user) {
@@ -48,7 +47,7 @@ module.exports = {
     },
 
     // lookup a user
-    lookup: function (id) {
+    lookup: function(id) {
         return model
             .findById(id);
     },
@@ -60,9 +59,9 @@ module.exports = {
     },
 
     // remove a user
-    remove: function (id) {
+    remove: function(id) {
         return model
             .findByIdAndRemove(id);
-    }
+    },
 
 };

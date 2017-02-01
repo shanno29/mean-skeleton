@@ -7,13 +7,13 @@
 !config
 !routes
 !test
-!public
-public/bundle.js
-!.env.dev
-!.env.prod
+!public/index.html
+!.env.*
+!.eslintrc.*.js
 !.gitignore
 !.travis.yml
 !app.js
+!gulpfile.js
 !LICENSE
 !package.json
 !README.md
