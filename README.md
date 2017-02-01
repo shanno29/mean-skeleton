@@ -1,4 +1,5 @@
 # mern-spa-skeleton
+[![Build Status](https://travis-ci.org/BadgerTek/mern-skeleton.svg?branch=master)](https://travis-ci.org/BadgerTek/mern-skeleton)
 A skeleton useful for SPAs running Node, Express, React, and MongoDB.
 
 ## Prereqs
