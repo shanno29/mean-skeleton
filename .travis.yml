@@ -18,7 +18,6 @@ services:
   - mongodb
 script:
   - cp .env.prod .env
-  - npm test
   - gulp travis
 after_success:
   - npm run coveralls

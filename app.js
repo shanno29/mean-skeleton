@@ -7,6 +7,7 @@ const express = require('express');
 const logger = require('morgan');
 const path = require('path');
 const app = express();
+const routes = require('./routes/index');
 require('dotenv').config();
 
 mongoose.Promise = global.Promise;
@@ -24,7 +25,6 @@ app.use(express.static(config.get('server.distFolder')));
 app.use('/coverage', express.static(path.join(__dirname + config.get('coverage'))));
 app.use('/documentation', express.static(path.join(__dirname + config.get('doc'))));
 app.use('/public', express.static(path.join(__dirname + config.get('public'))));
-app.use('/api', require('./routes/index'));
-app.use('/', require('./routes/react'));
+app.use('/', routes);
 
 module.exports = app;

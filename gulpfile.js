@@ -19,7 +19,7 @@ gulp.task('webserver', () => {
 });
 
 /* Webpack */
-gulp.task('webpack:prod', ['clean', 'lint:client', 'sasslint'], () => {
+gulp.task('webpack:prod', ['clean', 'lint:client', 'test:client'], () => {
   webpack_config.devtool = 'cheap-module-source-map';
   webpack_config.plugins.push(
     new webpack.optimize.DedupePlugin(),
@@ -34,7 +34,7 @@ gulp.task('webpack:prod', ['clean', 'lint:client', 'sasslint'], () => {
     .pipe(webpackStream(webpack_config))
     .pipe(gulp.dest('./'));
 });
-gulp.task('webpack:dev', ['clean', 'lint:client', 'sasslint'], () => {
+gulp.task('webpack:dev', ['clean', 'lint:client', 'test:client'], () => {
   webpack_config.devtool = 'cheap-module-eval-source-map';
   return gulp.src('app/app.jsx')
     .pipe(webpackStream(webpack_config))
@@ -49,17 +49,19 @@ gulp.task('test:client', () => {
 
 });
 gulp.task('test:server', ['webserver'], () => {
-  //var server = gulp.src('public').pipe(webserver({port: process.env.PORT}));
-
   gulp.src('**/*.spec.js', {read: false})
     .pipe(mocha({
       reporter: 'supersamples',
       globals: {
-        app: require('./app'),
         should: require('should')
       }
-    })).once('end', () => {
+    })).on('error', () => {
       connect.serverClose();
+      console.log(error);
+      process.exit(1);
+    }).once('end', () => {
+      connect.serverClose();
+      process.exit(0);
     });
 });
 gulp.task('test', ['test:client', 'test:server']);
@@ -91,11 +93,11 @@ gulp.task('lint:server', ['eslint:server']);
 gulp.task('lint', ['lint:client', 'lint:server']);
 
 /* Travis */
-gulp.task('travis', ['lint']);
+gulp.task('travis', ['lint', 'test']);
 
 /* Convenience tasks */
 gulp.task('client', ['webpack:dev']);
 gulp.task('server', ['lint:server']);
 gulp.task('watch', ['webpack:watch']);
-gulp.task('production', ['clean', 'lint', 'webpack:prod']);
-gulp.task('default', ['clean', 'lint', 'webpack:dev']);
+gulp.task('production', ['clean', 'lint', 'test', 'webpack:prod']);
+gulp.task('default', ['clean', 'lint', 'test', 'webpack:dev']);

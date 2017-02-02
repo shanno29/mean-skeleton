@@ -1,5 +1,6 @@
 const config = require('config');
 const request = require('supertest');
+const app = require('../../../app');
 
 describe('Action Route', function() {
     it('Create Action One', function(done) {
@@ -183,6 +184,49 @@ describe('Action Route', function() {
                 response.body.params[1].user.should.equal(config.get('userThree'));
                 response.body.params[1].command.should.equal('Goodbye World');
                 response.body.params.length.should.equal(2);
+                done();
+            });
+    });
+
+    it('Delete Action One', function(done) {
+        request(app.listen())
+            .delete('/api/actions/' + config.get('actionOne'))
+            .set('Accept', 'application/json')
+            // uncomment for jwt authentication
+            // .set('Authorization', 'JWT ' + global.userOneJwt)
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+            .expect(200)
+            .then(function(response) {
+                response.body.should.have.property('name');
+                response.body.should.have.property('params');
+                done();
+            });
+    });
+    it('Delete Action Two', function(done) {
+        request(app.listen())
+            .delete('/api/actions/' + config.get('actionTwo'))
+            .set('Accept', 'application/json')
+            // uncomment for jwt authentication
+            // .set('Authorization', 'JWT ' + global.userOneJwt)
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+            .expect(200)
+            .then(function(response) {
+                response.body.should.have.property('name');
+                response.body.should.have.property('params');
+                done();
+            });
+    });
+    it('Delete Action Three', function(done) {
+        request(app.listen())
+            .delete('/api/actions/' + config.get('actionThree'))
+            .set('Accept', 'application/json')
+            // uncomment for jwt authentication
+            // .set('Authorization', 'JWT ' + global.userOneJwt)
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+            .expect(200)
+            .then(function(response) {
+                response.body.should.have.property('name');
+                response.body.should.have.property('params');
                 done();
             });
     });

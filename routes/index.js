@@ -1,11 +1,14 @@
-const actionRoute = require('./api/action/action.route');
-const userRoute = require('./api/user/user.route');
 const router = require('express').Router();
+const reactRouter = require('./react');
+const actionRouter = require('./api/action/action.route');
+const userRouter = require('./api/user/user.route');
 
-// pass to action route branch
-router.use('/actions', actionRoute);
+// Action resource
+router.use('/api/actions', actionRouter);
+// User resource
+router.use('/api/users', userRouter);
 
-// pass to user route branch
-router.use('/users', userRoute);
+// React client
+router.use('/', reactRouter);
 
 module.exports = router;
