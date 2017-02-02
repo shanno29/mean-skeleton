@@ -6,16 +6,11 @@ const webpack_config = require('./webpack.config');
 const eslint = require('gulp-eslint');
 const sasslint = require('gulp-sass-lint');
 const mocha = require('gulp-mocha');
-const connect = require('gulp-connect');
 require('dotenv').config();
 
 /* Utils */
 gulp.task('clean', () => {
   return del(['public/**/*', '!public/index.html']);
-});
-
-gulp.task('webserver', () => {
-  connect.server({port: process.env.PORT});
 });
 
 /* Webpack */
@@ -49,6 +44,7 @@ gulp.task('test:client', () => {
 
 });
 gulp.task('test:server', () => {
+  process.env.DB_URL = 'mongodb://localhost/mern-test';
   gulp.src('**/*.spec.js', {read: false})
     .pipe(mocha({
       reporter: 'supersamples',
@@ -56,11 +52,9 @@ gulp.task('test:server', () => {
         should: require('should')
       }
     })).on('error', () => {
-      connect.serverClose();
       console.log(error);
       process.exit(1);
     }).once('end', () => {
-      connect.serverClose();
       process.exit(0);
     });
 });
