@@ -48,7 +48,7 @@ gulp.task('webpack:watch', ['webpack:dev'], () => {
 gulp.task('test:client', () => {
 
 });
-gulp.task('test:server', ['webserver'], () => {
+gulp.task('test:server', () => {
   gulp.src('**/*.spec.js', {read: false})
     .pipe(mocha({
       reporter: 'supersamples',
