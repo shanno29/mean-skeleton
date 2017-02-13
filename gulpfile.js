@@ -44,19 +44,17 @@ gulp.task('test:client', () => {
 
 });
 gulp.task('test:server', () => {
-  process.env.DB_URL = 'mongodb://localhost/mern-test';
-  gulp.src('**/*.spec.js', {read: false})
-    .pipe(mocha({
-      reporter: 'supersamples',
-      globals: {
-        should: require('should')
-      }
-    })).on('error', () => {
-      console.log(error);
-      process.exit(1);
-    }).once('end', () => {
-      process.exit(0);
-    });
+	return gulp.src(['test/mocha_setup.js', '**/.test.js', '!lib/routes/**/*'], {read: false})
+		.pipe(mocha({
+			reporter: 'spec',
+			//reporter: 'supersamples',
+			bail: false,
+		})).on('error', (err) => {
+			console.log(err);
+			process.exit(1);
+		}).once('end', () => {
+			process.exit(0);
+		});
 });
 gulp.task('test', ['test:client', 'test:server']);
 
@@ -68,7 +66,7 @@ gulp.task('eslint:client', () => {
     //.pipe(eslint.failAfterError());
 });
 gulp.task('eslint:server', () => {
-  return gulp.src(['test/**/*.js', 'routes/**/*.js', 'bin/www', 'app.js', 'config/**/*.js'])
+  return gulp.src(['lib/**/*.js', 'server.js', 'app.js', 'config/**/*.js'])
     .pipe(eslint({ configFile: './.eslintrc.server.js' }))
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());

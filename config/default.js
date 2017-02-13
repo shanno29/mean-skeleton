@@ -4,6 +4,7 @@ module.exports = {
     server: {
         distFolder: path.resolve(__dirname, '../public'),
     },
+    local_url: ('http://localhost:' + process.env.PORT),
     actionOne: '58797cdd4d1e021ce8648462',
     actionTwo: '58797cdd4d1e021ce8648463',
     actionThree: '58797cdd4d1e021ce8648464',
