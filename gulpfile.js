@@ -75,10 +75,8 @@ gulp.task('test:server', (done) => {
 		.pipe(mocha({
 			reporter: 'spec',
 			//reporter: 'supersamples',
-			bail: false,
-		})).on('error', (err) => {
-		}).once('end', () => {
-		});
+			bail: true,
+		}));
 });
 gulp.task('test', ['test:client', 'test:server']);
 
