@@ -12,8 +12,8 @@ addons:
     packages:
       - g++-4.8
 before_script:
-  - npm install -g gulp
-  - npm install
+  - npm i -g gulp
+  - npm i
 services:
   - mongodb
 script:

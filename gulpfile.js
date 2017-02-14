@@ -6,6 +6,7 @@ const webpack_config = require('./webpack.config');
 const eslint = require('gulp-eslint');
 const sasslint = require('gulp-sass-lint');
 const mocha = require('gulp-mocha');
+const filelog = require('gulp-filelog');
 require('dotenv').config();
 
 /* Utils */
@@ -39,50 +40,48 @@ gulp.task('webpack:watch', ['webpack:dev'], () => {
   gulp.watch(['app/**/*.jsx', 'app/**/*.js', 'app/sass/**/*.scss'], ['webpack:dev']);
 });
 
+/* Linting */
+gulp.task('lint:client:js', () => {
+  return gulp.src(['app/**/*.jsx', 'app/**/*.js'])
+    .pipe(eslint({ configFile: './.eslintrc.client.js' }))
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
+});
+gulp.task('lint:client:scss', () => {
+  return gulp.src(['app/**/*.scss'])
+    .pipe(sasslint())
+    .pipe(sasslint.format())
+    .pipe(sasslint.failOnError());
+});
+gulp.task('lint:server', () => {
+  return gulp.src(['index.js', 'server.js', 'config/**/*.js', 'lib/**/*.js'])
+	  //.pipe(filelog())
+    .pipe(eslint({ configFile: './.eslintrc.server.js' }))
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
+});
+gulp.task('htmllint', () => {
+  // TODO
+});
+gulp.task('lint:client', ['lint:client:js', 'lint:client:scss']);
+gulp.task('lint', ['lint:client', 'lint:server']);
+
 /* Karma/Testing */
 gulp.task('test:client', () => {
 
 });
-gulp.task('test:server', () => {
-	return gulp.src(['test/mocha_setup.js', '**/.test.js', '!lib/routes/**/*'], {read: false})
+gulp.task('test:server', (done) => {
+	return gulp.src(['!node_modules', 'test/mocha_setup.js', '**/.test.js'], {read: false})
 		.pipe(mocha({
 			reporter: 'spec',
 			//reporter: 'supersamples',
 			bail: false,
 		})).on('error', (err) => {
-			console.log(err);
-			process.exit(1);
 		}).once('end', () => {
-			process.exit(0);
 		});
 });
 gulp.task('test', ['test:client', 'test:server']);
 
-/* Linting */
-gulp.task('eslint:client', () => {
-  return gulp.src(['app/**/*.jsx', 'app/**/*.js'])
-    .pipe(eslint({ configFile: './.eslintrc.client.js' }))
-    .pipe(eslint.format());
-    //.pipe(eslint.failAfterError());
-});
-gulp.task('eslint:server', () => {
-  return gulp.src(['lib/**/*.js', 'server.js', 'app.js', 'config/**/*.js'])
-    .pipe(eslint({ configFile: './.eslintrc.server.js' }))
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError());
-});
-gulp.task('sasslint', () => {
-  return gulp.src(['app/sass/**/*.scss'])
-    .pipe(sasslint())
-    .pipe(sasslint.format())
-    .pipe(sasslint.failOnError());
-});
-gulp.task('htmllint', () => {
-  // TODO
-});
-gulp.task('lint:client', ['eslint:client', 'sasslint']);
-gulp.task('lint:server', ['eslint:server']);
-gulp.task('lint', ['lint:client', 'lint:server']);
 
 /* Travis */
 gulp.task('travis', ['lint', 'test']);

@@ -19,7 +19,13 @@ before(function(done) {
 });
 
 after(function(done) {
-	mongoose.connection.db.dropDatabase();
-	console.log('Test database purged');
-	done();
+	mongoose.connection.db.dropDatabase()
+		.then(function() {
+			console.log('Test database purged');
+			return mongoose.connection.close();
+		})
+		.then(function() {
+			console.log('Database connection closed');
+			done();
+		});
 });
