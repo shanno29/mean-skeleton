@@ -26,29 +26,29 @@ gulp.task('webpack:prod', ['clean', 'lint:client', 'test:client'], () => {
       }
     })
   );
-  return gulp.src('api/api.jsx')
+  return gulp.src('app/app.jsx')
     .pipe(webpackStream(webpack_config))
     .pipe(gulp.dest('./'));
 });
 gulp.task('webpack:dev', ['clean', 'lint:client', 'test:client'], () => {
   webpack_config.devtool = 'cheap-module-eval-source-map';
-  return gulp.src('api/api.jsx')
+  return gulp.src('app/app.jsx')
     .pipe(webpackStream(webpack_config))
     .pipe(gulp.dest('./'));
 });
 gulp.task('webpack:watch', ['webpack:dev'], () => {
-  gulp.watch(['api/**/*.jsx', 'api/**/*.js', 'api/sass/**/*.scss'], ['webpack:dev']);
+  gulp.watch(['app/**/*.jsx', 'app/**/*.js', 'app/sass/**/*.scss'], ['webpack:dev']);
 });
 
 /* Linting */
 gulp.task('lint:client:js', () => {
-  return gulp.src(['api/**/*.jsx', 'api/**/*.js'])
+  return gulp.src(['app/**/*.jsx', 'app/**/*.js'])
     .pipe(eslint({ configFile: './.eslintrc.client.js' }))
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
 });
 gulp.task('lint:client:scss', () => {
-  return gulp.src(['api/**/*.scss'])
+  return gulp.src(['app/**/*.scss'])
     .pipe(sasslint())
     .pipe(sasslint.format())
     .pipe(sasslint.failOnError());
