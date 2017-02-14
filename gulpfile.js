@@ -9,7 +9,7 @@ const mocha = require('gulp-mocha');
 const filelog = require('gulp-filelog');
 require('dotenv').config();
 
-/* Utils */
+/* Utilities */
 gulp.task('clean', () => {
   return del(['public/**/*', '!public/index.html']);
 });
@@ -26,36 +26,36 @@ gulp.task('webpack:prod', ['clean', 'lint:client', 'test:client'], () => {
       }
     })
   );
-  return gulp.src('app/app.jsx')
+  return gulp.src('api/api.jsx')
     .pipe(webpackStream(webpack_config))
     .pipe(gulp.dest('./'));
 });
 gulp.task('webpack:dev', ['clean', 'lint:client', 'test:client'], () => {
   webpack_config.devtool = 'cheap-module-eval-source-map';
-  return gulp.src('app/app.jsx')
+  return gulp.src('api/api.jsx')
     .pipe(webpackStream(webpack_config))
     .pipe(gulp.dest('./'));
 });
 gulp.task('webpack:watch', ['webpack:dev'], () => {
-  gulp.watch(['app/**/*.jsx', 'app/**/*.js', 'app/sass/**/*.scss'], ['webpack:dev']);
+  gulp.watch(['api/**/*.jsx', 'api/**/*.js', 'api/sass/**/*.scss'], ['webpack:dev']);
 });
 
 /* Linting */
 gulp.task('lint:client:js', () => {
-  return gulp.src(['app/**/*.jsx', 'app/**/*.js'])
+  return gulp.src(['api/**/*.jsx', 'api/**/*.js'])
     .pipe(eslint({ configFile: './.eslintrc.client.js' }))
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
 });
 gulp.task('lint:client:scss', () => {
-  return gulp.src(['app/**/*.scss'])
+  return gulp.src(['api/**/*.scss'])
     .pipe(sasslint())
     .pipe(sasslint.format())
     .pipe(sasslint.failOnError());
 });
 gulp.task('lint:server', () => {
   return gulp.src(['index.js', 'server.js', 'config/**/*.js', 'lib/**/*.js'])
-	  //.pipe(filelog())
+    //.pipe(filelog())
     .pipe(eslint({ configFile: './.eslintrc.server.js' }))
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
@@ -70,8 +70,9 @@ gulp.task('lint', ['lint:client', 'lint:server']);
 gulp.task('test:client', () => {
 
 });
-gulp.task('test:server', (done) => {
-	return gulp.src(['!node_modules', 'test/mocha_setup.js', '**/.test.js'], {read: false})
+gulp.task('test:server', () => {
+	return gulp.src([ 'test/mocha_setup.js', '**/.test.js', '**/*.test.js', '!node_modules/**/*'], {read: false})
+        //.pipe(filelog())
 		.pipe(mocha({
 			reporter: 'spec',
 			//reporter: 'supersamples',

@@ -10,7 +10,7 @@ before(function(done) {
 	mongoose.connect(process.env.DB_URL)
 		.then(function() {
 			console.log('Connected to MongoDB at ' + process.env.DB_URL);
-			require('lib/models');
+			require('lib/api');
 
 			done();
 		}).catch(function(err) {
