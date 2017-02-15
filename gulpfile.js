@@ -50,13 +50,6 @@ function test_client(done) {
 	done();
 }
 
-function pre_test_server() {
-	return gulp.src([ 'test/mocha_setup.js', '**/.test.js', '**/*.test.js', '!node_modules/**/*'], {read: false})
-		.pipe(istanbul())
-		// Force require to return covered files??
-		.pipe(istanbul.hookRequire());
-}
-
 function test_server() {
 	return gulp.src(['lib/**/*.js'])
 		.pipe(istanbul({includeUntested: true}))
@@ -108,23 +101,24 @@ function webpack_watch() {
 gulp.task('clean', clean);
 
 // Tasks - Linting
+gulp.task('lint:server:js', lint_server_js);
 gulp.task('lint:client:html', lint_html);
 gulp.task('lint:client:js', lint_client_js);
 gulp.task('lint:client:scss', lint_client_scss);
-gulp.task('lint:server:js', lint_server_js);
 
-let lint_client = gulp.parallel(lint_html, lint_client_js, lint_client_scss);
-gulp.task('lint:client', lint_client);
 let lint_server = gulp.parallel(lint_server_js);
 gulp.task('lint:server', lint_server);
-let lint = gulp.parallel(lint_client, lint_server);
+let lint_client = gulp.parallel(lint_html, lint_client_js, lint_client_scss);
+gulp.task('lint:client', lint_client);
+
+let lint = gulp.parallel(lint_server, lint_client);
 gulp.task('lint', lint);
 
 // Tasks - Testing
-gulp.task('test:client', test_client);
-gulp.task('pre-test:server', pre_test_server);
 gulp.task('test:server', test_server);
-let test = gulp.series(test_client, pre_test_server, test_server);
+gulp.task('test:client', test_client);
+
+let test = gulp.series(test_server, test_client);
 gulp.task('test', test);
 
 // Tasks - Webpack
@@ -138,8 +132,8 @@ gulp.task('webpack:watch', watch);
 // Tasks - Composites
 gulp.task('travis', gulp.series(lint, test));
 
-gulp.task('client', gulp.series(lint_client, test_client, webpack_dev));
 gulp.task('server', gulp.series(lint_server, test_server));
+gulp.task('client', gulp.series(lint_client, test_client, webpack_dev));
 
 gulp.task('watch', watch);
 
