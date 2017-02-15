@@ -6,6 +6,8 @@ const webpack_config = require('./webpack.config');
 const eslint = require('gulp-eslint');
 const sasslint = require('gulp-sass-lint');
 const mocha = require('gulp-mocha');
+const istanbul = require('gulp-istanbul');
+const tap = require('gulp-tap');
 const filelog = require('gulp-filelog');
 require('dotenv').config();
 
@@ -16,21 +18,21 @@ function clean() {
 
 /* Linting */
 function lint_client_js() {
-	return gulp.src(['app/**/*.jsx', 'app/**/*.js'])
+	return gulp.src(['app/**/*.jsx', 'app/**/*.js'], {read: false})
     .pipe(eslint({ configFile: './.eslintrc.client.js' }))
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
 }
 
 function lint_client_scss() {
-	return gulp.src(['app/**/*.scss'])
+	return gulp.src(['app/**/*.scss'], {read: false})
 		.pipe(sasslint())
 		.pipe(sasslint.format())
 		.pipe(sasslint.failOnError());
 }
 
 function lint_server_js() {
-	return gulp.src(['index.js', 'server.js', 'config/**/*.js', 'lib/**/*.js'])
+	return gulp.src(['index.js', 'server.js', 'config/**/*.js', 'lib/**/*.js'], {read: false})
 		//.pipe(filelog())
 		.pipe(eslint({ configFile: './.eslintrc.server.js' }))
 		.pipe(eslint.format())
@@ -48,14 +50,30 @@ function test_client(done) {
 	done();
 }
 
-function test_server() {
+function pre_test_server() {
 	return gulp.src([ 'test/mocha_setup.js', '**/.test.js', '**/*.test.js', '!node_modules/**/*'], {read: false})
-		//.pipe(filelog())
-		.pipe(mocha({
-			reporter: 'spec',
-			//reporter: 'supersamples',
-			bail: false,
-		}));
+		.pipe(istanbul())
+		// Force require to return covered files??
+		.pipe(istanbul.hookRequire());
+}
+
+function test_server() {
+	return gulp.src(['lib/**/*.js'])
+		.pipe(istanbul({includeUntested: true}))
+		.pipe(istanbul.hookRequire())
+		.on('end', function() {
+			gulp.src([ 'test/mocha_setup.js', '**/.test.js', '**/*.test.js', '!node_modules/**/*'])
+				// .pipe(filelog())
+				.pipe(mocha({
+					// TODO: Separate these, integration tests should go to supersamples, unit tests to mochawesome.
+					reporter: 'mochawesome',
+					// reporter: 'supersamples',
+					bail: false,
+				}))
+				.pipe(istanbul.writeReports({reporters: ['html', 'text-summary']}));
+				// Enforce coverage of at least 90%
+				// .pipe(istanbul.enforceThresholds({thresholds: {global: 90}}));
+		});
 }
 
 /* Webpack */
@@ -104,8 +122,9 @@ gulp.task('lint', lint);
 
 // Tasks - Testing
 gulp.task('test:client', test_client);
+gulp.task('pre-test:server', pre_test_server);
 gulp.task('test:server', test_server);
-let test = gulp.series(test_client, test_server);
+let test = gulp.series(test_client, pre_test_server, test_server);
 gulp.task('test', test);
 
 // Tasks - Webpack
