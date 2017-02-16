@@ -12,5 +12,5 @@ const app = (
 
 ReactDOM.render(
   app,
-  document.getElementById('api')
+  document.getElementById('app')
 );
