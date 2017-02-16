@@ -7,7 +7,6 @@ const eslint = require('gulp-eslint');
 const sasslint = require('gulp-sass-lint');
 const mocha = require('gulp-mocha');
 const istanbul = require('gulp-istanbul');
-const tap = require('gulp-tap');
 const filelog = require('gulp-filelog');
 require('dotenv').config();
 
