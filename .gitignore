@@ -1,5 +1,22 @@
-server/node_modules
-server/npm-debug.log
-npm-debug.log
+# Ignore everything
+/*
 
-client/dist/components
+!.github
+!app
+!bin
+!config
+!lib
+!test
+!public/index.html
+!.env.*
+!.eslintrc.*.js
+!.gitignore
+!.travis.yml
+!gulpfile.js
+!index.js
+!LICENSE
+!package.json
+!README.md
+!server.js
+!supersamples.opts
+!webpack.config.js
